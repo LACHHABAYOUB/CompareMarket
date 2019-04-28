@@ -1,0 +1,326 @@
+<app-card [title]="'Mercado'" [classHeader]="true" [blockClass]="'table-border-style'" [cardOptionBlock]="true">
+  <div class="table-responsive">
+    <table class="table table-framed">
+      <thead>
+        <div class="content-buttons-options">
+          <a *ngIf="eUsuarioAdmin" class="buttom-refresh" (click)="listar()" title="Refrescar"></a>
+          <a class="buttom-add" (click)="modalLarge.show()"></a>
+          <a class="buttom-filter" (click)="toggleRightbar()"></a>
+        </div>
+
+        <!-- Formule Adicionar start -->
+
+        <div class="row">
+          <form [formGroup]="formAdd" (ngSubmit)="adicionar()">
+            <app-modal-basic #modalLarge [hideHeader]="true" [hideFooter]="true" [dialogClass]="'modal-lg'">
+              <div class="app-modal-header">
+                <h4 class="modal-title">Cadastro de Mercado</h4>
+                <button type="button" class="close basic-close" (click)="modalLarge.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="app-modal-body">
+                <ngb-tabset>
+                  <ngb-tab title="Mercado">
+                    <ng-template ngbTabContent>
+                      <div [@fadeInOutTranslate] class="m-t-15">
+                        <div class="row">
+                          <div class="message text-danger"
+                            *ngIf="submitted && (f.cnpj.errors?.required || f.situacao.errors?.required || f.SGS.errors?.required || f.telefone.errors?.required || f.email.errors?.required || f.cidade.errors?.required)">
+                            Alguns campos são requeridos!</div>
+                          <div class="message text-danger"
+                            *ngIf="submitted && (f.email.errors && f.email.errors?.pattern)">O email é inválido!</div>
+                        </div>
+                        <div class="m-4">
+                          <div class="row">
+                            <!-- <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" #cnpj class="form-control" formControlName="cnpj" id="cnpj"
+                                  placeholder="CNPJ" [brmasker]="{ person: true }" minlength="18"
+                                  (change)="localizarCNPJ($event)"
+                                  [class]="(submitted && f.cnpj.errors && f.cnpj.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div> -->
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" formControlName="SGS" id="SGS"
+                                  placeholder="Codio SGS"
+                                  [class]="(submitted && f.SGS.errors && f.SGS.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <select name="select" id='situacao' formControlName="situacao"
+                                  [class]="(submitted && f.situacao.errors && f.situacao.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                                  <option value="A" selected="selected">Ativo</option>
+                                  <option value="I">Inativo</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <p>
+                                Cadastro: {{dataCadastrao | date: 'dd/MM/yyyy'}}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                             <div class="col-md-6">
+                              <div class="input-group">
+                                <input type="text" #cnpj class="form-control" formControlName="cnpj" id="cnpj"
+                                  placeholder="CNPJ" [brmasker]="{ person: true }" minlength="18"
+                                  (change)="localizarCNPJ($event)"
+                                  [class]="(submitted && f.cnpj.errors && f.cnpj.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                              <div class="input-group">
+                                <input type="text" formControlName="SGS" id="SGS"
+                                  placeholder="Codio SGS"
+                                  [class]="(submitted && f.SGS.errors && f.SGS.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div> -->
+                            <div class="col-md-6">
+                              <div class="input-group">
+                                <input type="text" formControlName="nomefantasia" id="nomefantasia"
+                                  placeholder="Nome Fantasia"
+                                  [class]="(submitted && f.nomefantasia.errors && f.nomefantasia.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" formControlName="contato" id="contato" placeholder="Contato"
+                                  [class]="(submitted && f.contato.errors && f.contato.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" #telefone class="form-control" formControlName="telefone"
+                                  id="telefone" placeholder="Telefone" [brmasker]="{ phone: true }" minlength="15"
+                                  [class]="(submitted && f.telefone.errors && f.telefone.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="email" id="email"
+                                  [class]="(submitted && f.email.errors && f.email.errors.required) || f.email.errors?.pattern ? 'form-control form-control-danger' : 'form-control'"
+                                  placeholder="E-mail">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="search" class="form-control" formControlName="cep" id="cep"
+                                  placeholder="CEP" [brmasker]="{mask:'00.000-000', len:10}"
+                                  (change)="localizarCEP($event)">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="endereco" id="endereco"
+                                  placeholder="Endereco">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="numero" id="numero"
+                                  maxlength="10" placeholder="Número">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="complemento" id="complemento"
+                                  placeholder="Complemento">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="bairro" id="bairro"
+                                  placeholder="Bairro">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <select class="form-control" #estado id="estado" formControlName="estado"
+                                  [class]="(submitted && f.estado.errors && f.estado.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                                  <option *ngFor="let c of estados" [ngValue]="c.data">{{c.data}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <input type="text" class="form-control" formControlName="cidade" id="cidade"
+                                  placeholder="Cidade"
+                                  [class]="(submitted && f.cidade.errors && f.cidade.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="input-group">
+                                <select name="select" id='trabalhaTresCasasDecimais' formControlName="trabalhaTresCasasDecimais"
+                                  [class]="(submitted && f.trabalhaTresCasasDecimais.errors && f.trabalhaTresCasasDecimais.errors.required) ? 'form-control form-control-danger' : 'form-control'">
+                                  <option value="S" selected="selected">dois decimais</option>
+                                  <option value="N">três decimais</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="m-t-20 text-right">
+                            <button #cancelButton type="button" class="btn btn-default waves-effect"
+                              (click)="modalLarge.hide()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light"> Salvar
+                              alterações</button>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+                  <ngb-tab title="Vendedores">
+                    <ng-template ngbTabContent>
+                      <div [@fadeInOutTranslate] class="m-t-15">
+                        <div class="m-4">
+                          <h6>Filiais</h6>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur
+                            adipiscing</p>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+                </ngb-tabset>
+              </div>
+            </app-modal-basic>
+          </form>
+        </div>
+
+        <!-- Formule Adicionar end -->
+
+         <!-- Filtre Start  -->
+
+         <div id="styleSelector" [ngClass]="configOpenRightBar">
+          <div class="selector-toggle">
+            <a href="javascript:" placement="left" ngbTooltip="Fechar" (click)="toggleRightbar()"></a>
+          </div>
+          <form class="form-width">
+            <ul>
+              <li>
+                <p class="selector-title main-title st-main-title text-center"><b>Filtros Filial</b></p>
+              </li>
+            </ul>
+          </form>
+          <form class="form-width" [formGroup]="formFiltros" (ngSubmit)="onListar()">
+            <div class="form-radio">
+              <div class="radio ">
+                <label>
+                  <input type="radio" name="filtro" value="999999" [checked]="true" formControlName="filtro"
+                    (change)="onChangeFiltro($event)">
+                  <i class="helper"></i>Sem Filtro
+                </label>
+              </div>
+              <hr>
+              <div class="radio ">
+                <label>
+                  <input type="radio" name="filtro" value="0" formControlName="filtro"
+                    (change)="onChangeFiltro($event)">
+                  <i class="helper"></i>Nome
+                </label>
+              </div>
+              <div class="radio ">
+                <label>
+                  <input type="radio" name="filtro" value="3" formControlName="filtro"
+                    (change)="onChangeFiltro($event)">
+                  <i class="helper"></i>Código Filial
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="filtro" value="2" formControlName="filtro"
+                    (change)="onChangeFiltro($event)">
+                  <i class="helper"></i>Cidade
+                </label>
+              </div>
+            </div>
+            <div class="input-group input-gray-dark">
+              <input type="text" #pesquisa id="pesquisa" placeholder="Pesquisa"
+                [ngClass]="{'hide': eFiltroCodFilialSelecionado()}"
+                [class]="eFiltroTextoObrigatorio ? 'form-control form-control-danger' : 'form-control' ">
+              <input type="number" #codFilialDe id="codFilialDe" placeholder="0" formControlName="codFilialDe"
+                [class]="eFiltroTextoObrigatorio ? 'form-control form-control-danger' : 'form-control' "
+                [ngClass]="{'hide': !eFiltroCodFilialSelecionado()}">
+              <input type="number" #codFilialAte id="codFilialDe" placeholder="999999" formControlName="codFilialDe"
+                [class]="eFiltroTextoObrigatorio ? 'form-control form-control-danger' : 'form-control' "
+                [ngClass]="{'hide': !eFiltroCodFilialSelecionado()}">
+              <div class="messages text-danger" *ngIf="eFiltroTextoObrigatorio">Este campo não
+                pode ser deixado em branco ou ser zero.
+              </div>
+              <span class="md-line"></span>
+            </div>
+            <div class="text-right">
+              <button type="button" #cancelButton class="btn btn-secondary" (click)="toggleRightbar()">Cancelar</button>
+              <button type="submit" class="btn btn-primary"> Aplicar Filtros</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Filtre end  -->
+
+        <!-- Table start  -->
+        
+        <div *ngIf="isLoadingMercado">
+            <div class="loader-bg">
+              <!-- material-line -->
+              <div class="sk-line-material" [class.colored]="!backgroundColor">
+                <div class="sk-child sk-bounce1" [style.background-color]='backgroundColor'></div>
+              </div>
+            </div>
+          </div>
+        <ngx-datatable #myTable class="data-table expandable" [rows]='rows' [limit]="10" [columnMode]="'force'"
+          [headerHeight]="45" [footerHeight]="45" [rowHeight]="'auto'" selectionType="single" [loadingIndicator]="true">
+          <ngx-datatable-column name="Codigo SGS">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.clienteSgs}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="CNPJ">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.cnpjClienteSG}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Nome Fantasia">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.nome}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Contato">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.contato}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Telefone">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.foneComercial}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Cidade">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.endereco.cidade}} - {{row.endereco.uf}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Opções">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="table-option-row">
+                <a (click)="alterar($event)" [attr.id]="row.id" class="edit"> <i class="ti-pencil-alt"></i> </a>
+                <a (click)="delete($event)" [attr.id]="row.id" class="remove"> <i class="ti-trash"></i> </a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+
+
+        <!-- Table end  -->

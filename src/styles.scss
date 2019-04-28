@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+//loader in button class
+.loader-in-button {
+    display: flex;
+    justify-content: center;
+  
+    .svg-loader {
+      width: 25px !important;
+      height: 25px !important;
+  
+      #circle-loader2 {
+        stroke: #FFF;
+      }
+    }
+  
+    > div {
+      display: flex;
+      justify-content: space-around;
+    }
+  
+    .button-label {
+      margin-right: 5px;
+    }
+  }
+
+
+  

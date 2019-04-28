@@ -1,0 +1,57 @@
+.icons-alert::before {
+  top: inherit;
+}
+
+.auth-box {
+  .close {
+    position: absolute;
+    right: 9px;
+    top: 18%;
+  }
+  .padding-top-md {
+    padding-top: 60px;
+  }
+  .alert {
+    margin-bottom: 0px;
+  }
+}
+
+.common-img-bg {
+  .md-float-material img {
+    width: 350px;
+  }
+}
+
+.form-width {
+  input {
+      width: 100%;
+  }
+}
+
+//loader in button class
+.loader-in-button {
+  display: flex;
+  justify-content: center;
+
+  .svg-loader {
+    width: 25px !important;
+    height: 25px !important;
+
+    #circle-loader2 {
+      stroke: #FFF;
+    }
+  }
+
+  > div {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .button-label {
+    margin-right: 5px;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

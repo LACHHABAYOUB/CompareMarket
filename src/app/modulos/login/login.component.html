@@ -1,0 +1,78 @@
+<section class="login p-fixed d-flex text-center common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <form [formGroup]="formLogin" (ngSubmit)="onClickLogin()" class="md-float-material form-width">
+            <div class="auth-box">
+              <div class="text-center">
+                <img src="assets/images/logo.png" alt="SG Cotanet">
+              </div>
+              <div class="input-group">
+                <input type="input" #username id="username" formControlName="username"
+                  [class]="(submitted && f.username.errors && f.username.errors.required) ? 'form-control form-control-danger' : 'form-control' "
+                  placeholder="Login">
+                <div class="messages text-danger" *ngIf="submitted && f.username.errors?.required">Este campo não
+                  pode ser deixado em branco</div>
+                <span class="md-line"></span>
+              </div>
+              <div class="input-group">
+                <input type="password" #password id="password" formControlName="password"
+                  [class]="(submitted && f.password.errors && f.password.errors.required) ? 'form-control form-control-danger' : 'form-control' "
+                  placeholder="Senha">
+                <div class="messages text-danger" *ngIf="submitted && f.password.errors?.required">Este campo não
+                  pode ser deixado em branco</div>
+                <span class="md-line"></span>
+              </div>
+              <div *ngIf="alertMessage">
+                <div class="alert alert-danger icons-alert">
+                  <button type="button" class="close" appRemoveAlert>
+                    <i class="icofont icofont-close-line-circled"></i>
+                  </button>
+                  <p> {{alertMessage}}</p>
+                </div>
+                <hr />
+              </div>
+              <div class="row m-t-25 text-left">
+                <div class="col-12">
+                  <div class="checkbox-fade fade-in-primary d-">
+                    <label>
+                      <input type="checkbox" name="lembraruser" #lembraruser formControlName="lembraruser" (change)="changeLembrarUser($event)" >
+                      <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                      <span class="text-inverse">Salvar usuário e senha</span>
+                    </label>
+                  </div>
+                  <div class="forgot-phone text-right f-right">
+                    <a (click)="irRecuperacaosenha($event)" class="text-right f-w-600 text-inverse cursor-pointer"> Esqueço a Senha?</a>
+                  </div>
+                </div>
+              </div>
+              <div class="row m-t-30">
+                <div class="col-md-12">
+                  <button [ngClass]="{ 'loader-in-button' : isDoingRequest }"
+                    class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">
+                    <div>
+                      <div class="button-label" onclick="route()"> Acessar o Sistema </div>
+                      <svg id="loader2" class="svg-loader" viewBox="0 0 100 100" *ngIf="isDoingRequest">
+                        <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+
+  <!-- end of container-fluid -->
+</section>

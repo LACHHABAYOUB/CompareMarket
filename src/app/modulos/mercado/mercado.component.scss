@@ -1,0 +1,155 @@
+.table-option-row {
+  text-align: center;
+  a {
+    margin: 5px;
+
+    &:hover {
+      cursor: pointer;
+
+      &.remove {
+        color: #e74c3c;
+      }
+
+      &.edit {
+        color: #4099ff;
+      }
+    }
+
+    &.remove {
+      color: #e74c3c;
+    }
+
+    &.edit {
+      color: #4099ff;
+    }
+  }
+
+  i {
+    font-size: 17px;
+  }
+}
+
+.datatable-body-row {
+  &.active {
+    a {
+      &.edit {
+        color: #fff;
+      }
+
+      &.remove {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.buttom-add {
+  background-image: url("../../../assets/images/icon_add.svg");
+  width: 25px;
+  height: 25px;
+  display: flex;
+  margin: 5px;
+  border: 1px solid #fff;
+  background-size: 100% 100%;
+}
+
+.buttom-add:hover {
+  cursor: pointer;
+}
+
+.buttom-filter {
+  background-image: url("../../../assets/images/icon_filter.svg");
+  width: 25px;
+  height: 25px;
+  display: flex;
+  margin: 5px;
+  border: 1px solid #fff;
+  background-size: 100% 100%;
+}
+
+.buttom-refresh {
+  background-image: url("../../../assets/images/icon_refresh.svg");
+  width: 25px;
+  height: 25px;
+  display: flex;
+  margin: 5px;
+  border: 1px solid #fff;
+  background-size: 100% 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.buttom-filter:hover {
+  cursor: pointer;
+}
+
+.content-buttons-options {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 17px;
+}
+
+.card .card-header h5 {
+  font-size: 1.375rem;
+}
+
+#pesquisa {
+  width: 100%;
+}
+
+.form-control-danger {
+  border: 1px solid #ff5370 !important;
+  color: #ff5370;
+}
+
+.text-danger {
+  width: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.message {
+  margin-left: 38px;
+}
+
+.loader-bg {
+  width: 96.7%;
+
+  .sk-child {
+    background-color: #38a9f9;
+  }
+}
+
+//loader in button class
+.loader-in-button {
+  //display: flex;
+  //justify-content: center;
+  pointer-events: none;
+  background-color: #73b4ff;
+  border-color: #73b4ff;
+
+  .svg-loader {
+    width: 25px !important;
+    height: 25px !important;
+
+    #circle-loader2 {
+      stroke: #fff;
+    }
+  }
+
+  > div {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .button-label {
+    margin-right: 5px;
+  }
+}
